@@ -36,7 +36,7 @@ export default function TypingText() {
     }, [text, isDeleting, wordIndex]);
 
     return (
-        <span className="flex text-cyan-400 text-base md:text-lg justify-center md:justify-start font-bold">
+        <span className="flex text-cyan-400 text-base lg:text-lg justify-center lg:justify-start font-bold">
             {text}
             <span className="animate-pulse"> |</span>
         </span>

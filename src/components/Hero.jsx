@@ -121,6 +121,7 @@ export default function Hero() {
     const imageScale = useSpring(useTransform(scrollYProgress, [0, SCROLL_RANGES.HERO_END], [1, 0.85]), SPRING_CONFIG);
     const glowScale = useSpring(useTransform(scrollYProgress, [0, SCROLL_RANGES.HERO_END], [1, 0.8]), SPRING_CONFIG);
     const iconOpacity = useSpring(useTransform(scrollYProgress, [0, SCROLL_RANGES.HERO_END], [1, 0]));
+    const centerScratchOpacity = useSpring(useTransform(scrollYProgress, [0, SCROLL_RANGES.HERO_END], [1, 0]));
 
     return (
         <section ref={heroRef} className="relative min-h-[200vh] bg-black" id="hero">
@@ -134,13 +135,25 @@ export default function Hero() {
                 />
 
                 {/* Hero Title */}
-                <div className="relative z-10 flex justify-center pt-8 md:pt-6 px-4">
+                <div className="relative z-10 flex flex-col items-center justify-center pt-8 lg:pt-6 px-4">
                     <motion.h1
                         style={{ x: heroX, y: heroY, scale: heroScale }}
-                        className="text-white font-bold text-4xl sm:text-5xl md:text-6xl lg:text-8xl text-center"
+                        className="text-white font-bold text-4xl lg:text-8xl text-center"
                     >
                         {personalInfo.name}
                     </motion.h1>
+
+                    {/* Center Scratch */}
+                    <motion.div
+                        className="mt-20 block lg:hidden"
+                        style={{ opacity: centerScratchOpacity }}
+                    >
+                        <HandDrawnScratch
+                            scratch={scratchPaths.path1}
+                            className="relative"
+                            delay={1}
+                        />
+                    </motion.div>
                 </div>
 
                 {/* About Section */}
@@ -150,12 +163,12 @@ export default function Hero() {
     );
 }
 
-function Background({ imageScale, glowScale, iconOpacity }) {
+function Background({ imageScale, glowScale, iconOpacity, centerScratchOpacity }) {
     return (
         <div className="absolute inset-0 pointer-events-none">
             {/* Ambient Blurs */}
-            <div className="absolute w-64 h-64 md:w-96 md:h-96 bg-cyan-500/10 rounded-full blur-3xl top-20 -left-20 animate-pulse" />
-            <div className="absolute w-64 h-64 md:w-96 md:h-96 bg-cyan-500/10 rounded-full blur-3xl bottom-20 -right-20 animate-pulse" />
+            <div className="absolute w-64 h-64 lg:w-96 lg:h-96 bg-cyan-500/10 rounded-full blur-3xl top-20 -left-20 animate-pulse" />
+            <div className="absolute w-64 h-64 lg:w-96 lg:h-96 bg-cyan-500/10 rounded-full blur-3xl bottom-20 -right-20 animate-pulse" />
 
             {/* Scratches */}
             {SCRATCHES.map((scratch, i) => (
@@ -167,7 +180,7 @@ function Background({ imageScale, glowScale, iconOpacity }) {
                 <motion.img
                     src={HeroImage}
                     alt="Hero"
-                    className="w-96 origin-bottom"
+                    className="w-60 md:w-80 lg:w-96 origin-bottom"
                     style={{ scale: imageScale }}
                 />
             </div>
@@ -175,7 +188,7 @@ function Background({ imageScale, glowScale, iconOpacity }) {
             {/* Glow Effect */}
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10">
                 <motion.div
-                    className="w-80 h-80 md:w-[30rem] md:h-[30rem] rounded-full blur-2xl origin-bottom bg-cyan-500/50"
+                    className="w-60 h-60 md:w-72 md:h-72 lg:w-[30rem] lg:h-[30rem] rounded-full blur-2xl origin-bottom bg-cyan-500/50"
                     style={{ scale: glowScale }}
                 />
             </div>
@@ -191,13 +204,13 @@ function Background({ imageScale, glowScale, iconOpacity }) {
 function BouncingIcon({ className, duration, delay, path, opacity }) {
     return (
         <motion.div
-            className={`absolute w-12 h-12 md:w-16 md:h-16 z-30 hidden md:block ${className}`}
+            className={`absolute w-12 h-12 lg:w-16 lg:h-16 z-30 hidden lg:block ${className}`}
             animate={{ y: [0, -20, 0] }}
             transition={{ duration, repeat: Infinity, ease: 'easeInOut', delay }}
             style={{ opacity }}
         >
             <div className="w-full h-full bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl shadow-lg shadow-cyan-500/50 flex items-center justify-center">
-                <svg className="w-6 h-6 md:w-8 md:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 lg:w-8 lg:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={path} />
                 </svg>
             </div>
@@ -209,25 +222,25 @@ function AboutSection({ opacity, y }) {
     return (
         <motion.div
             style={{ opacity, y, pointerEvents: opacity }}
-            className="absolute inset-0 z-20 flex items-start pt-32 sm:pt-36 md:pt-28 lg:pt-32"
+            className="absolute inset-0 z-20 flex items-start pt-32 sm:pt-36 lg:pt-28 lg:pt-32"
         >
-            <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-12 flex flex-col gap-8 md:gap-20" id='about'>
+            <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-12 flex flex-col gap-8 lg:gap-20" id='about'>
 
                 {/* Header */}
                 <div className="text-center pointer-events-none">
-                    <h3 className="text-white text-2xl md:text-3xl font-bold mb-3 md:mb-4">
+                    <h3 className="text-white text-2xl lg:text-3xl font-bold mb-3 lg:mb-4">
                         <span className="text-cyan-400">01.</span> About Me
                     </h3>
-                    <div className="w-16 md:w-20 h-1 bg-cyan-500 mx-auto mb-4 md:mb-6" />
+                    <div className="w-16 lg:w-20 h-1 bg-cyan-500 mx-auto mb-4 lg:mb-6" />
                 </div>
 
-                <div className="flex flex-col md:flex-row justify-between items-start gap-8 md:gap-4">
+                <div className="flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-4">
 
                     {/* Left Column */}
-                    <div className="space-y-4 md:space-y-6 w-full md:max-w-sm md:pt-15">
+                    <div className="space-y-4 lg:space-y-6 w-full lg:max-w-sm lg:pt-15">
                         <TypingText />
 
-                        <div className="flex gap-3 md:gap-4 justify-center md:justify-start mt-4">
+                        <div className="flex gap-3 lg:gap-4 justify-center lg:justify-start mt-4">
                             {SOCIAL_LINKS.map((social, i) => (
                                 <SocialLink key={i} icon={social.icon} href={social.href} />
                             ))}
@@ -235,11 +248,11 @@ function AboutSection({ opacity, y }) {
                     </div>
 
                     {/* Right Column */}
-                    <div className="space-y-6 md:space-y-8 w-full md:max-w-sm text-center md:text-justify">
-                        <p className="text-gray-400 text-sm md:text-base leading-relaxed">
+                    <div className="space-y-6 lg:space-y-8 w-full lg:max-w-sm text-center lg:text-justify">
+                        <p className="text-gray-400 text-sm lg:text-base leading-relaxed">
                             {personalInfo.bio}
                         </p>
-                        <div className="space-y-3 md:space-y-4">
+                        <div className="space-y-3 lg:space-y-4 hidden lg:block">
                             {QUICK_LINKS.map((link) => (
                                 <QuickLink key={link.href} {...link} />
                             ))}
@@ -259,7 +272,7 @@ function SocialLink({ icon: Icon, href }) {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            className="p-2 md:p-3 border border-gray-700 rounded-lg hover:border-cyan-400 hover:text-cyan-400 text-gray-300"
+            className="p-2 lg:p-3 border border-gray-700 rounded-lg hover:border-cyan-400 hover:text-cyan-400 text-gray-300"
         >
             <Icon />
         </motion.a>
@@ -271,7 +284,7 @@ function QuickLink({ href, label }) {
         <div className="relative w-full group">
             <a
                 href={href}
-                className="flex justify-center md:justify-between items-center gap-2 text-white text-sm md:text-base transition-colors hover:text-cyan-400"
+                className="flex justify-center lg:justify-between items-center gap-2 text-white text-sm lg:text-base transition-colors hover:text-cyan-400"
             >
                 {label}
                 <svg
