@@ -21,6 +21,7 @@ import php from './images/php.webp';
 import python from './images/python.webp';
 import react from './images/react.webp';
 import supabase from './images/supabase.webp';
+import signify from './images/signify.webp';
 import devquiz from './images/devquiz.webp';
 import sigesit from './images/sigesit.webp';
 import lms from "./images/lms.webp";
@@ -214,6 +215,15 @@ export const projects = [
         demoLink: "#",
         githubLink: "https://github.com/adtyfathan/nutralis"
     },
+    {
+        id: 9,
+        title: "Sign Language Learning Website",
+        description: "Signify is a sign language learning website that offers interactive lessons and resources to help users learn and practice sign language effectively.",
+        technologies: ["Laravel", "React", "Python", "Computer Vision"],
+        image: signify,
+        demoLink: "#",
+        githubLink: "https://github.com/adtyfathan/signify"
+    }
 ];
 
 export const certificates = [
